@@ -1,0 +1,24 @@
+{
+  "name": "sourceup-project",
+  "version": "1.0.0",
+  "description": "Automating the SourceUp website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfakiisa/SourceUp-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alfakiisa/SourceUp-Project/issues"
+  },
+  "homepage": "https://github.com/alfakiisa/SourceUp-Project#readme",
+  "devDependencies": {
+    "cypress": "^14.5.4"
+  }
+}
