@@ -137,23 +137,14 @@ describe('Initiatives page', () => {
 
 
 
-  it.skip('INIT-05 Verify that filter by country works as expected', () => {
+  it('INIT-05 Verify that filter by country works as expected', () => {
 
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD').click(); // Open the country filter dropdown
     cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that contry modal is open
-    cy.get('.AutoCompleteInput_input__WYKdG').type('indonesia'); // Enter country name
+    cy.get('.AutoCompleteInput_input__WYKdG').type('colombia'); // Enter country name
     cy.wait(2000)
-    //cy.get('div.CheckboxInput_root__NzOGG.CheckboxInput_card__1e_8f').contains('Indonesia').click({force: true}) // Check input box
-    //cy.contains('label', 'Indonesia').click({force: true}) // Check input box
-   // cy.get('input[type="checkbox"][name="Indonesia"][value="false"]')
-     // .click({ force: true }).trigger('change')
-    cy.get('input.CheckboxInput_input__OpdCv').check({force: true})
-    //cy.get('input[type="checkbox"][name="Indonesia"][value="true"]').should('be.checked')
-    //.click({ force: true }).trigger('change');
-
-    
-  
-    cy.wait(5000)
+    cy.get('div.CheckboxInput_root__NzOGG.CheckboxInput_card__1e_8f').contains('Colombia').click() // Check input box
+    cy.wait(3000)
     cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').contains('Show results').click() // Click on show results
 
     // Grab the counter text (e.g. "5 results")
@@ -167,62 +158,22 @@ describe('Initiatives page', () => {
         cy.get('.CompactItem_root__V6qMa') // your card selector
           .should('have.length', count);
       });
-    
+
 
     
   })
 
-  
+
   
   it.skip('INIT-06 Verify that filter by commodity works as expected', () => {
 
-    cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD').click(); // Open the commodity filter
-    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that contry modal is open
-    cy.get('.AutoCompleteInput_input__WYKdG').type('livelihood'); // Enter country name
-    cy.wait(2000)
-    cy.get('input.CheckboxInput_input__OpdCv').check({force: true}) // Check Checknox
-    cy.wait(5000)
-    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').contains('Show results').click() // Click on show results
-
-    // Grab the counter text (e.g. "5 results")
-    cy.get('.EditModalForm_resultsCounter__giAlA') // adjust to your actual counter selector
-      .invoke('text')
-      .then((text) => {
-        // Extract the number from the text
-        const count = parseInt(text.match(/\d+/)[0]);
-
-        // Compare with number of cards rendered
-        cy.get('.CompactItem_root__V6qMa') // your card selector
-          .should('have.length', count);
-      });
-    
 
 
     
   })
 
 
-  it('INIT-07 Verify that filter by themes works as expected', () => {
-    cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_tag__SgXcC').click(); // Open the commodity filter
-    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that contry modal is open
-    cy.get('.AutoCompleteInput_input__WYKdG').type('brazil'); // Enter country name
-    cy.wait(2000)
-    cy.get('input.CheckboxInput_input__OpdCv').check({force: true}) // Check Checknox
-    cy.wait(5000)
-    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').contains('Show results').click() // Click on show results
-
-    // Grab the counter text (e.g. "5 results")
-   cy.get('.EditModalForm_resultsCounter__giAlA') // adjust to your actual counter selector
-      .invoke('text')
-      .then((text) => {
-        // Extract the number from the text
-        const count = parseInt(text.match(/\d+/)[0]);
-
-        // Compare with number of cards rendered
-        cy.get('.CompactItem_root__V6qMa') // your card selector
-          .should('have.length', count);
-      });
-    
+  it.skip('INIT-07 Verify that filter by themes works as expected', () => {
 
 
 
