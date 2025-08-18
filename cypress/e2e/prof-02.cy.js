@@ -27,7 +27,7 @@ describe('Initiative profile/Landscape', () => {
          .type('This is my description');
 
       cy.get('input[name="blobUrl"]')
-        .selectFile("C:\\Users\\emmanuel.ogala\\Pictures\\Screenshots\\Screenshot 2025-07-23 111631.png", {force: true});
+        .selectFile("cypress/fixtures/test-image.png", {force: true});
       cy.get('button[form="initative-image-video-add"]').click();
       cy.get('button[form="initiative-gallery-edit"]').click();
   
