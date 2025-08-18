@@ -1,8 +1,8 @@
 import LoginPage from '../support/pageObjects/LoginPage';
 
-describe('Specify landscape details', () => {
+describe('Initiative profile/Landscape', () => {
 
-  it('Preconditions', () => {
+  it('Specify landscape details', () => {
     LoginPage.visit();
     // LoginPage.acceptCookies();
     LoginPage.openMenu();
