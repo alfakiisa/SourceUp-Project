@@ -1,18 +1,11 @@
-/**
-"1. Click on the floating add button
-2. Search ""aceh"" in the search bar
-3. Select all returned results
-4. Click on ""Download chosen""
-5. Check ""Select All""
-6. Click on ""Proceed to Download "
- */
+
 import LoginPage from '../support/pageObjects/LoginPage';
 describe('Initiatives page', () => {
 
   it('visit compacts page', () => {
 
     cy.visit('https://acc.sourceup.org/compacts')
-   });
+   })
 
   it.skip('Login admin', () => {
     //cy.viewport(1280, 720) // set viewport size
@@ -20,7 +13,7 @@ describe('Initiatives page', () => {
     //LoginPage.acceptCookies(); // Uncomment if cookie acceptance is needed
     LoginPage.openMenu();
     LoginPage.clickLogin();
-    LoginPage.azureLogin('l.vuckovic+admin@vegait.rs', 'Admin123!');
+    LoginPage.azureLogin('l.vuckovic+admin@vegait.rs', 'Admin123!')
     
   })
 
@@ -36,9 +29,6 @@ describe('Initiatives page', () => {
     cy.get('.CheckboxInput_label__B515S').first().should('be.visible').click({force: true}) // check "Select All" checkbox
     cy.get('.Button_root__sMa56.Button_tertiary__FXv_P.Button_hasIcon__Pfx4E.Button_icon_arrow__qFEJR').click() // click on "Proceed to Download"
 
-    //cy.get('LandscapeDataDownloadInitiativeCard_row__dchrc').should('contain', 'Aceh')//
-    //cy.get('.search-bar input').type('aceh') // search for "aceh"
-    //cy.get('.search-bar button').click() // click on the search button
   })
 
 
@@ -135,98 +125,83 @@ describe('Initiatives page', () => {
   })  
 
 
-
-
   it.skip('INIT-05 Verify that filter by country works as expected', () => {
 
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD').click(); // Open the country filter dropdown
-    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that contry modal is open
+    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that country modal is open
     cy.get('.AutoCompleteInput_input__WYKdG').type('indonesia'); // Enter country name
-    cy.wait(2000)
-    //cy.get('div.CheckboxInput_root__NzOGG.CheckboxInput_card__1e_8f').contains('Indonesia').click({force: true}) // Check input box
-    //cy.contains('label', 'Indonesia').click({force: true}) // Check input box
-   // cy.get('input[type="checkbox"][name="Indonesia"][value="false"]')
-     // .click({ force: true }).trigger('change')
-    cy.get('input.CheckboxInput_input__OpdCv').check({force: true})
-    //cy.get('input[type="checkbox"][name="Indonesia"][value="true"]').should('be.checked')
-    //.click({ force: true }).trigger('change');
+    cy.get('div.CheckboxInput_root__NzOGG.CheckboxInput_card__1e_8f').contains('Indonesia')
+      .trigger('mousedown').trigger('mouseup').click() // Click on checkbox using mouse events
+    cy.wait(5000)
+    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]')
+      .contains('Show results').click() // Click on show results
 
     
-  
-    cy.wait(5000)
-    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').contains('Show results').click() // Click on show results
-
-    // Grab the counter text (e.g. "5 results")
-    cy.get('.EditModalForm_resultsCounter__giAlA') // adjust to your actual counter selector
+    cy.get('.EditModalForm_resultsCounter__giAlA') // Grab the counter text (e.g. "Shown results: 5")
       .invoke('text')
       .then((text) => {
-        // Extract the number from the text
-        const count = parseInt(text.match(/\d+/)[0]);
+      
+        const count = parseInt(text.match(/\d+/)[0])   // Extract the number from the text
 
-        // Compare with number of cards rendered
-        cy.get('.CompactItem_root__V6qMa') // your card selector
+        
+        cy.get('.CompactItem_root__V6qMa') // Compare with number of cards rendered
           .should('have.length', count);
       });
-    
-
     
   })
 
   
   
-  it.skip('INIT-06 Verify that filter by commodity works as expected', () => {
+  it('INIT-06 Verify that filter by commodity works as expected', () => {
 
-    cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD').click(); // Open the commodity filter
-    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that contry modal is open
-    cy.get('.AutoCompleteInput_input__WYKdG').type('livelihood'); // Enter country name
-    cy.wait(2000)
-    cy.get('input.CheckboxInput_input__OpdCv').check({force: true}) // Check Checknox
+    cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_plant__ifOJV').click(); // Open the commodity filter
+    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that commodity modal is open
+    cy.get('.AutoCompleteInput_input__WYKdG').type('avocado'); // Enter commodity name
+
+    //cy.get('input[name="3a8cb9ef-aab7-49ee-85b8-c317a1fe5daf"]').should('be.visible')
+    //cy.get('div.CheckboxInput_root__NzOGG.CheckboxInput_card__1e_8f').contains('avocado')
+    cy.get('div.AutoCompleteInput_checkbox__0FV9d')
+      .trigger('mousedown').trigger('mouseup').click({force: true}) // Click on checkbox using mouse events
     cy.wait(5000)
     cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').contains('Show results').click() // Click on show results
 
-    // Grab the counter text (e.g. "5 results")
-    cy.get('.EditModalForm_resultsCounter__giAlA') // adjust to your actual counter selector
+    // Assert that result counted matches number of cards returned
+    cy.get('.EditModalForm_resultsCounter__giAlA') //Grab the counter text (e.g. "Shown results: 5")
       .invoke('text')
       .then((text) => {
-        // Extract the number from the text
-        const count = parseInt(text.match(/\d+/)[0]);
+   
+        const count = parseInt(text.match(/\d+/)[0]) // Extract the number from the text
 
         // Compare with number of cards rendered
-        cy.get('.CompactItem_root__V6qMa') // your card selector
+        cy.get('.CompactItem_root__V6qMa') 
           .should('have.length', count);
       });
-    
-
-
     
   })
 
 
-  it('INIT-07 Verify that filter by themes works as expected', () => {
-    cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_tag__SgXcC').click(); // Open the commodity filter
-    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that contry modal is open
-    cy.get('.AutoCompleteInput_input__WYKdG').type('brazil'); // Enter country name
+  it.skip('INIT-07 Verify that filter by themes works as expected', () => {
+    cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_tag__SgXcC').click(); // Open the themes filter
+    cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that modal is open
+    cy.get('.AutoCompleteInput_input__WYKdG').type('livelihood'); // Enter theme name
     cy.wait(2000)
-    cy.get('input.CheckboxInput_input__OpdCv').check({force: true}) // Check Checknox
-    cy.wait(5000)
-    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').contains('Show results').click() // Click on show results
+    //cy.get('input.CheckboxInput_input__OpdCv').check({force: true}) // Click on checkbox
+    cy.get('div.CheckboxInput_root__NzOGG.CheckboxInput_card__1e_8f').contains('Livelihood')
+      .trigger('mousedown').trigger('mouseup').click({force: true}) // Click on checkbox using mouse events
+    cy.wait(5000) // Wait for change of event
+    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]')
+      .contains('Show results').click() // Click on show results
 
-    // Grab the counter text (e.g. "5 results")
-   cy.get('.EditModalForm_resultsCounter__giAlA') // adjust to your actual counter selector
+    // Assert that result counted matches number of cards returned
+   cy.get('.EditModalForm_resultsCounter__giAlA') // Grab the counter text (e.g. "Shown results: 5")
       .invoke('text')
       .then((text) => {
-        // Extract the number from the text
-        const count = parseInt(text.match(/\d+/)[0]);
+        const count = parseInt(text.match(/\d+/)[0]) // Extract the number from the text
 
         // Compare with number of cards rendered
-        cy.get('.CompactItem_root__V6qMa') // your card selector
-          .should('have.length', count);
-      });
-    
-
-
-
-    
+        cy.get('.CompactItem_root__V6qMa') 
+          .should('have.length', count)
+      })    
   })
 
 })
