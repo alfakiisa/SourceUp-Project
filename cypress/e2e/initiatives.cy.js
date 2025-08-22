@@ -18,7 +18,7 @@ describe('Initiatives page', () => {
   })
 
 
-  it.skip('INIT-01 Download lanscape data', () => {
+  it('INIT-01 Download lanscape data', () => {
    
     //cy.get('a[href="/compacts"]').eq(0).click() // navigate to explore initiatives
     cy.get('h1.CompactSidebarCompacts_title__oCDs8').should('contain', 'Find sustainability changemakers') // check if the header is correct 
@@ -32,7 +32,7 @@ describe('Initiatives page', () => {
   })
 
 
-  it.skip('INIT-02 Verify that pin location matches initiative card', () => {
+  it('INIT-02 Verify that pin location matches initiative card', () => {
    
 
     //cy.get('CompactMapMarker_root__f0_UP').should('be.visible') // check if the map marker is visible
@@ -59,7 +59,7 @@ describe('Initiatives page', () => {
 
   
 
-  it.skip(' INIT-03 Verify that search functionality works as expected', () => {
+  it(' INIT-03 Verify that search functionality works as expected', () => {
     
 
     cy.get('input[name="search"]').click().type('aceh').wait(3000) // search for "aceh"
@@ -76,7 +76,7 @@ describe('Initiatives page', () => {
   })
 
 
-  it.skip('INIT-04 Verify that filter by collections dropdown works as expected', () => {
+  it('INIT-04 Verify that filter by collections dropdown works as expected', () => {
    
 
     // Open the dropdown
@@ -125,7 +125,7 @@ describe('Initiatives page', () => {
   })  
 
 
-  it.skip('INIT-05 Verify that filter by country works as expected', () => {
+  it('INIT-05 Verify that filter by country works as expected', () => {
 
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD').click(); // Open the country filter dropdown
     cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that country modal is open
@@ -180,7 +180,7 @@ describe('Initiatives page', () => {
   })
 
 
-  it.skip('INIT-07 Verify that filter by themes works as expected', () => {
+  it('INIT-07 Verify that filter by themes works as expected', () => {
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_tag__SgXcC').click(); // Open the themes filter
     cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that modal is open
     cy.get('.AutoCompleteInput_input__WYKdG').type('livelihood'); // Enter theme name
