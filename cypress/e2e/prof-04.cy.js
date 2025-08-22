@@ -1,7 +1,7 @@
 import LoginPage from '../support/pageObjects/LoginPage';
 
-describe('Initiative profile/Landscape/Images', () => {
-  it('Adjust title and description', () => {
+describe('Initiative profile/Landscape', () => {
+  it('Remove picture', () => {
     LoginPage.visit();
     // LoginPage.acceptCookies();
     LoginPage.openMenu();
@@ -31,19 +31,14 @@ describe('Initiative profile/Landscape/Images', () => {
       cy.get('button[form="initative-image-video-add"]').click();
       cy.get('button[form="initiative-gallery-edit"]').click();
   
+  
+      cy.get(':nth-child(1) > .CompactDetailGeneralLandscape_image___l0p0').trigger('mouseover')
+      cy.get('button.Button_icon_bullets__DRgQ0').eq(3).click({ force: true })
 
-cy.get(':nth-child(1) > .CompactDetailGeneralLandscape_image___l0p0').trigger('mouseover')
-cy.get('button.Button_icon_bullets__DRgQ0').eq(3).click({ force: true })
 
-
-cy.get('li .OptionMenu_icon__KZL_d.OptionMenu_pencil__zcJLP').click({force: true})
-
- cy.get('input[name="blobTitle"]').clear().type('New Test Image Upload');
-       cy.get('input[name="blobDescription"]')
-         .clear()
-         .type('This is my New description');
-cy.get('button[form="initiative-gallery-edit"]').click();
-
+      cy.get('.OptionMenu_list__gUcVw > :nth-child(2)').click()
+      cy.get('button[form="removal-modal-forms"]').click();
+    
 
 
 
