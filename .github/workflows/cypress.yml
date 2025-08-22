@@ -1,12 +1,17 @@
 name: Cypress Tests
 
 on:
+<<<<<<< HEAD
   push:
     branches:
       - main
   pull_request:
     branches:
       - main  
+=======
+  workflow_dispatch:
+
+>>>>>>> 35b92712c9d9be922cef83cbc533e0b77f23f52c
 
 jobs:
   cypress-run:
