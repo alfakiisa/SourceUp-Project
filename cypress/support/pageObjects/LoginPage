@@ -3,40 +3,40 @@ class LoginPage {
     cy.visit('https://acc.sourceup.org/');
   }
 
-//   acceptCookies() {
-//     cy.get('#CybotCookiebotDialogBodyLevelButtonAccept')
-//       .should('be.visible')
-//       .click();
-//   }
+  //   acceptCookies() {
+  //     cy.get('#CybotCookiebotDialogBodyLevelButtonAccept')
+  //       .should('be.visible')
+  //       .click();
+  //   }
 
   openMenu() {
-    cy.get('button.Hamburger_root__Hm9k4 div.Hamburger_inner__nFmaS')
+    cy.get('button.Hamburger_root__Hm9k4')
       .should('be.visible')
       .click();
   }
 
   clickLogin() {
-    cy.contains('span.button__inner', 'Login')
+    cy.contains('span.Button_inner__U5HsR', 'Log In')
       .should('be.visible')
       .click();
   }
 
   azureLogin(email, password) {
-    cy.origin('https://idhsourceup.b2clogin.com', 
-        {args: {email, password}},
-        ({email, password}) => {
-      cy.get('input[name="Email Address"], input[type="email"]')
-        .should('be.visible')
-        .type(email);
+    cy.origin('https://idhsourceup.b2clogin.com',
+      { args: { email, password } },
+      ({ email, password }) => {
+        cy.get('input[name="Email Address"], input[type="email"]')
+          .should('be.visible')
+          .type(email);
 
-      cy.get('#next, button[type="submit"]').first().click();
+        cy.get('#next, button[type="submit"]').first().click();
 
-      cy.get('input[type="password"]')
-        .should('be.visible')
-        .type(password);
+        cy.get('input[type="password"]')
+          .should('be.visible')
+          .type(password);
 
-      cy.get('#next, button[type="submit"]').first().click();
-    });
+        cy.get('#next, button[type="submit"]').first().click();
+      });
   }
 }
 
