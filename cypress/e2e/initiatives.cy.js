@@ -2,27 +2,24 @@
 import LoginPage from '../support/pageObjects/LoginPage';
 describe('Initiatives page', () => {
 
-  beforeEach('visit compacts page', () => {
-
-    cy.visit('https://acc.sourceup.org/compacts')
-   })
-
-  it.skip('Login admin', () => {
+  beforeEach('Login admin', () => {
     //cy.viewport(1280, 720) // set viewport size
     LoginPage.visit();
     //LoginPage.acceptCookies(); // Uncomment if cookie acceptance is needed
     LoginPage.openMenu();
     LoginPage.clickLogin();
     LoginPage.azureLogin('l.vuckovic+admin@vegait.rs', 'Admin123!')
+    cy.wait(3000)
     
   })
 
 
-  it('INIT-01 Download lanscape data', () => {
+  it('Download lanscape data', () => {
    
     //cy.get('a[href="/compacts"]').eq(0).click() // navigate to explore initiatives
     cy.get('h1.CompactSidebarCompacts_title__oCDs8').should('contain', 'Find sustainability changemakers') // check if the header is correct 
-    cy.get('button[type="button"]').eq(7).click() //should('be.visible').click() // click on the floating add button
+    //cy.get('button[type="button"]').eq(7).click() //should('be.visible').click() // click on the floating add button
+    cy.get('.Button_root__sMa56.Button_tertiary__FXv_P.Button_noContent__e0DyF.Button_hasIcon__Pfx4E.Button_icon_plus__1TZKS').click() // click on the floating add button
     cy.get('.CheckboxInput_label__B515S').first().click() // check "Aceh" checkbox
     cy.get('.CheckboxInput_label__B515S').eq(1).click() // check "Aceh Landscape" checkbox
     cy.get('.Button_root__sMa56.Button_tertiary__FXv_P.Button_hasIcon__Pfx4E.Button_icon_plus__1TZKS').last().click() // click on "Download chosen"
@@ -32,7 +29,7 @@ describe('Initiatives page', () => {
   })
 
 
-  it('INIT-02 Verify that pin location matches initiative card', () => {
+  it('Verify that pin location matches initiative card', () => {
    
 
     //cy.get('CompactMapMarker_root__f0_UP').should('be.visible') // check if the map marker is visible
@@ -59,7 +56,7 @@ describe('Initiatives page', () => {
 
   
 
-  it('INIT-03 Verify that search functionality works as expected', () => {
+  it('Verify that search functionality works as expected', () => {
   const searchKeyword = 'aceh' // define the search keyword
 
   cy.get('input[name="search"]').click().type(searchKeyword).wait(3000) // search for "aceh"
@@ -80,7 +77,7 @@ describe('Initiatives page', () => {
 })
 
 
-  it('INIT-04 Verify that filter by collections dropdown works as expected', () => {
+  it('Verify that filter by collections dropdown works as expected', () => {
    
 
     // Open the dropdown
@@ -129,7 +126,7 @@ describe('Initiatives page', () => {
   })  
 
 
-  it('INIT-05 Verify that filter by country works as expected', () => {
+  it('Verify that filter by country works as expected', () => {
 
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD').click(); // Open the country filter dropdown
     cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that country modal is open
@@ -156,7 +153,7 @@ describe('Initiatives page', () => {
 
   
   
-  it('INIT-06 Verify that filter by commodity works as expected', () => {
+  it('Verify that filter by commodity works as expected', () => {
 
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_plant__ifOJV').click(); // Open the commodity filter
     cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that commodity modal is open
@@ -184,7 +181,7 @@ describe('Initiatives page', () => {
   })
 
 
-  it('INIT-07 Verify that filter by themes works as expected', () => {
+  it('Verify that filter by themes works as expected', () => {
     cy.get('.CompactFilterButton_root__XyY93.CompactFilterButton_tag__SgXcC').click(); // Open the themes filter
     cy.get('.EditModalForm_root__Amakx').should('be.visible'); // Assert that modal is open
     cy.get('.AutoCompleteInput_input__WYKdG').type('livelihood'); // Enter theme name
