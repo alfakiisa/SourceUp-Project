@@ -146,8 +146,8 @@ describe('Initiatives page', () => {
 
         
         cy.get('.CompactItem_root__V6qMa') // Compare with number of cards rendered
-          .should('have.length', count);
-      });
+          .should('have.length', count)
+      })
     
   })
 
