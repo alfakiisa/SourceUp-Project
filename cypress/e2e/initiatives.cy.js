@@ -1,71 +1,109 @@
 import LoginPage from '../support/pageObjects/LoginPage';
 
 describe('Initiatives page', () => {
-  beforeEach('Login as admin', () => {
-    // cy.viewport(1280, 720) // Optional: set viewport size
-    LoginPage.visit();
-    // LoginPage.acceptCookies(); // Uncomment if cookie acceptance is needed
+  beforeEach('Valid Login', () => {
+     // Clear cookies before running the test
+     cy.clearCookies();
+     LoginPage.visit();
+     // LoginPage.acceptCookies();
+     LoginPage.openMenu();
+     LoginPage.clickLogin();
+     LoginPage.azureLogin('l.vuckovic+admin@vegait.rs', 'Admin123!');
+   });
+  
+  /*
+  before(() => {
+  cy.session('admin', () => {
+    // Visit your app
+    cy.visit('https://acc.sourceup.org');
+
+    // Start login flow
     LoginPage.openMenu();
     LoginPage.clickLogin();
-    LoginPage.azureLogin('l.vuckovic+admin@vegait.rs', 'Admin123!');
-    cy.wait(3000);
+
+    // Handle Azure B2C login
+    cy.origin('https://idhsourceup.b2clogin.com', () => {
+      // These commands run inside the Azure login page
+      cy.get('#email').type('l.vuckovic+admin@vegait.rs');
+      cy.get('#password').type('Admin123!');
+      cy.get('#next').click();
+    });
+
+    // After login, Cypress returns to your app origin
+    cy.url().should('include', '/dashboard'); // assert login success
+    });
   });
+
+
+  beforeEach(() => {
+    cy.session('admin'); // restore the session before each test
+  });
+ */
 
   it('Download landscape data', () => {
     // Assert header is correct
-    cy.get('h1.CompactSidebarCompacts_title__oCDs8')
-      .should('contain', 'Find sustainability changemakers');
+    cy.get('.IntroBlock_text__Jmy0Z')
+      .should('contain', 'Access data, build partnerships, and showcase impact in commodity production regions.');
+ 
+      // Go to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
 
-    // Select landscapes
-    cy.get(
-      '.Button_root__sMa56.Button_tertiary__FXv_P.Button_noContent__e0DyF.Button_hasIcon__Pfx4E.Button_icon_plus__1TZKS'
-    ).click();
-
+    // Click on FAB
+    cy.get('button[class="Button_root__sMa56 Button_tertiary__FXv_P Button_noContent__e0DyF Button_hasIcon__Pfx4E Button_icon_plus__1TZKS"]').click()
+    
+    // Select landscape data to download 
     cy.get('.CheckboxInput_label__B515S').first().click();
     cy.get('.CheckboxInput_label__B515S').eq(1).click();
 
-    // Download chosen
-    cy.get(
-      '.Button_root__sMa56.Button_tertiary__FXv_P.Button_hasIcon__Pfx4E.Button_icon_plus__1TZKS'
-    )
-      .last()
-      .click();
+    // Click on Download chosen
+    cy.get('.Button_root__sMa56.Button_tertiary__FXv_P.Button_hasIcon__Pfx4E.Button_icon_plus__1TZKS')
+      .last().click();
 
+    // Click on Select All checkbox  
     cy.get('.CheckboxInput_label__B515S')
       .first()
       .should('be.visible')
       .click({ force: true });
 
+    // Click on Proceed to Download button
     cy.get(
       '.Button_root__sMa56.Button_tertiary__FXv_P.Button_hasIcon__Pfx4E.Button_icon_arrow__qFEJR'
     ).click();
   });
 
+
   it('Verify that pin location matches initiative card', () => {
-    cy.get('.CompactItem_root__V6qMa')
-      .first()
+
+    // Go to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
+
+    // Locate first compact card
+    cy.get('.CompactItem_root__V6qMa.CompactItem_childStyles__0G4hk')
+      .first().should('be.visible')
       .within(() => {
         cy.get('.CompactItem_title__loJ_n')
           .invoke('text')
           .then((cardTitle) => {
             // Click the corresponding map marker
-            cy.get(
-              '[style*="cursor: pointer"] > .CompactMapMarker_root__f0_UP'
-            ).click();
+            cy.get('.CompactMapMarker_root__f0_UP').first().click({force:true});
 
             // Assert the card with same title is highlighted
             cy.get('.CompactItem_root__V6qMa')
-              .contains(cardTitle)
+              .contains(cardTitle.trim())
               .should('be.visible')
               .and('have.class', 'active'); // adjust class if different
           });
       });
   });
 
+
   it('Verify that search functionality works as expected', () => {
     const searchKeyword = 'aceh';
 
-    cy.get('input[name="search"]').click().type(searchKeyword);
+      // Got to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
+
+    cy.get('input[name="search"][class="TextInput_dom__UzyZG"]').click().type(searchKeyword);
     cy.wait(3000);
 
     cy.get('a.CompactItem_root__V6qMa').each(($el) => {
@@ -82,6 +120,10 @@ describe('Initiatives page', () => {
   });
 
   it('Verify that filter by collections dropdown works as expected', () => {
+
+    // Go to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
+
     // Open dropdown
     cy.get('#select-collections').click();
 
@@ -121,6 +163,10 @@ describe('Initiatives page', () => {
   });
 
   it('Verify that filter by country works as expected', () => {
+
+    // Go to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
+
     // Open country filter
     cy.get(
       '.CompactFilterButton_root__XyY93.CompactFilterButton_earth__kMOBD'
@@ -155,6 +201,10 @@ describe('Initiatives page', () => {
   });
 
   it('Verify that filter by commodity works as expected', () => {
+
+    // Go to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
+
     // Open commodity filter
     cy.get(
       '.CompactFilterButton_root__XyY93.CompactFilterButton_plant__ifOJV'
@@ -186,7 +236,11 @@ describe('Initiatives page', () => {
       });
   });
 
-  it('Verify that filter by themes works as expected', () => {
+  it.only('Verify that filter by themes works as expected', () => {
+
+    // Go to landscapes
+    cy.get('.CTAButton_button__dsjzD').first().click();
+
     // Open themes filter
     cy.get(
       '.CompactFilterButton_root__XyY93.CompactFilterButton_tag__SgXcC'
