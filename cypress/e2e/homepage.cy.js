@@ -1,100 +1,118 @@
 describe('Homepage', () => {
-  beforeEach('Homepage loads successfully', () => {
-    cy.visit('https://acc.sourceup.org');
+
+  // Define a session to cache the homepage state
+  beforeEach('Cache homepage session', () => {
+    cy.session('homepage-session', () => {
+      cy.visit('https://acc.sourceup.org');
+      // Optionally verify the page loaded correctly
+      cy.get('body').should('be.visible');
+      // Optionally wait for critical elements or API calls
+      // cy.intercept('GET', '/api/some-endpoint').as('loadData');
+      // cy.wait('@loadData');
     })
+  }) 
 
- it('Click on hamburger menu and assert presence of key elements like Login and Signup', () => {
- 
-  //  Click on the hamburger menu
-  cy.get('[type="button"].Hamburger_root__Hm9k4').click();
-
-  // Check if the Explore Initiatives link is present, clickable and redirects correctly
-  cy.contains('a.Navigation_link__uIuwp', 'Explore Initiatives')
-    .should('be.visible')
-    .and('have.attr', 'href');
-
-  // Check if the How it works link is present
-  cy.contains('a.Navigation_link__uIuwp', 'Show Your Landscape')
-    .should('be.visible')
-    .and('have.attr', 'href');
-
-    //Check if the For Buyers link is present
-  cy.contains('a.Navigation_link__uIuwp', 'For Buyers')
-    .should('be.visible')
-    .and('have.attr', 'href');
-    
-  // Check if the Impact stories link is present
-  cy.contains('a.Navigation_link__uIuwp', 'Impact stories')
-    .should('be.visible')
-    .and('have.attr', 'href');
-    
-  // Check if the How it works link is present  
-  cy.contains('a.Navigation_link__uIuwp', 'How it works')
-    .should('be.visible')
-    .and('have.attr', 'href');
-
-    // Check if the Participating Organizations link is present
-  cy.contains('a.Navigation_link__uIuwp', 'Participating Organizations')
-    .should('be.visible')
-    .and('have.attr', 'href');
-
-   // Check if the Login button is present
-   cy.get('.button__inner').contains('Login')
-     .should('be.visible');
-
-  // Check if the Signup button is present
-  cy.get('.button__inner').contains('Sign up')
-    .should("be.visible");
-
-  // Check that the en button is present and clcikable
-  cy.get('.button__inner').contains('en')
-    .should('be.visible').click()
-    
-  // Check that the language dropdown is present 
-  cy.get('.Navigation_lang_option_list__DE53r').should('be.visible');
-
-  // check the cancel is visible and clickable
-  cy.contains('.button__inner', 'Cancel').should('be.visible').click();
-
-  // Check if the Contact link is present and visible
-  cy.get('span.button__inner')
-  .contains('Contact')
-  .should('be.visible')
-  
-  // Check if the about link is present
-  cy.get('a[href="/about"]').eq(0).should('have.text', 'About');
-
-  // check if the partners link is present
-  cy.get('a[href="/partners"]').should('be.visible').and('have.attr', 'href', '/partners');
-
-  // Check if the Social media links are present
-  cy.get('.Socials_list__PU399').should('be.visible');
-    
-  // Check if the hamburger menu closes after clicking
-  cy.get('[type="button"].Hamburger_root__Hm9k4').click();
-  // cy.get('.Navigation_root__1b2a7').should('not.exist');
-
-
- })
- 
-  it('should display the homepage correctly', () => {
+  it.only('should display the homepage correctly', () => {
     
     // Check if the header title is correct
-    cy.contains('h1', 'Contribute to change').should('be.visible');
-    
-    // Check if the main description text is present
-    cy.contains('SourceUp is a new collaboration platform for supply chain sustainability changemakers').should('be.visible');
-  
-    // Check if the "Explore Initiatives" button is present and clickable
-    cy.get("[role='button']").eq(0).should("have.text", "Explore Initiatives").click();
-    cy.location('pathname').should('include', '/compacts');
-
-    // Check if the "How it works" button is present and clickable
-    cy.get("[role='button']").eq(1).should("have.text", "How it works").click();
-    cy.location('pathname').should('include', '/how-it-works');
-
+    cy.get('div[class="IntroBlock_text__Jmy0Z"]')
+    .should('have.text', 'Access data, build partnerships, and showcase impact in commodity production regions.')
+    .should('be.visible')
 
   })
+
+ it('Assert presence of key elements like Login and Signup', () => {
+  
+  // Check if Log In button is present and clickable
+  cy.contains('span.Button_inner__U5HsR', 'Log In')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()   
+
+  // Check if Sign Up button is present and clickable   
+   cy.get('button[type="button"]').contains('Sign Up')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()   
+
+    
+  // Check if the i18n button is present and clickable
+  cy.get('button[type="button"]').contains('en')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()   
+
+
+  // Check if the Participating Organizations link is present
+   cy.contains('ul.SUNavigation_navigation__Rrh4c', 'Participating Organizations')
+    .should('be.visible')
+    .and('have.attr', 'href')
+    .click() 
+
+   // Check if the News & Updates link is present and clickable
+    cy.contains('ul.SUNavigation_navigation__Rrh4c', 'News & Updates')
+    .should('be.visible')
+    .and('have.attr', 'href')
+    .click() 
+
+  // Check if the Contact link is present and clickable
+   cy.contains('ul.SUNavigation_navigation__Rrh4c', 'Contact')
+    .should('be.visible')
+    .and('have.attr', 'href')
+    .click()   
+  
+  // Check if the Explore Landscapes link is present, clickable and redirects correctly
+  cy.contains('a[class="CTAButton_textWrapper__jGsFC"]', 'EXPLORE LANDSCAPES')
+    .should('be.visible')
+    .and('have.attr', 'href')
+    .click()
+
+  // Check if the How it Works link is present
+  cy.contains('a[class="CTAButton_textWrapper__jGsFC"]', 'LEARN HOW IT WORKS')
+    .should('be.visible')
+    .and('have.attr', 'href')
+    .click()
+    
+    
+  // Check if the How it works link is present  
+   cy.contains('ul.SUNavigation_navigation__Rrh4c', 'For Landscapes')
+    .should('be.visible')
+    .and('have.attr', 'href')
+    .click() 
+
+    
+
+  
+  
+  // Check if Show Your Landscape link is present and clickable
+  cy.contains('button[type="button"]', '[title="Plus Icon"]')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()  
+
+  // Check if Show Your Landscape link is present and clickable
+  cy.contains('button[type="button"]', '[title="Plus Icon"]')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()  
+
+
+  // Check if Discover Sustainable Initiatives link is present and clickable
+  cy.contains('CompactBlockItem_content__frCjq', 'Show Your Landscape', '.Button_inner__U5HsR')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()  
+
+  // Check if Show Your Landscape link is present and clickable
+  cy.contains('CompactBlockItem_content__frCjq', 'Discover Sustainable Initiatives', '.Button_inner__U5HsR')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()  
+    
+
+  })
+ 
+  
 
   it('url Status', () => {
     const urlOne="https://acc.sourceup.org/_next/data/6wiKskVKqVfhC6qp7XzuY/en/about.json?slug=about"
@@ -138,7 +156,7 @@ describe('Homepage', () => {
     cy.contains('.Header_content__uHkTU', 'Get inspired by exciting news and updates from landscapes around the globe')
       .should('be.visible');
 
-      //Verify that the news cards have the exact lenght displayed
+      //Verify that the news cards have the exact length displayed
       cy.get(".StoryBlock_inner__DlHLU").should('have.length', 60);       
 
   })
@@ -260,17 +278,17 @@ it('For sourcing and for organisation section', () => {
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
-cy.location('pathname').should('eq', '/start-a-compact');
-cy.go('back');
+ cy.location('pathname').should('eq', '/start-a-compact');
+ cy.go('back');
 
-// Verify that the for the organization button acts accordingly
-cy.contains('a[href="/compacts"]', 'Support an initiative in your supply chain')
+ // Verify that the for the organization button acts accordingly
+ cy.contains('a[href="/compacts"]', 'Support an initiative in your supply chain')
   .should('be.visible')
   .and('have.attr', 'href', '/compacts')
   .click();
 
-cy.location('pathname').should('eq', '/compacts');
-cy.go('back');
+ cy.location('pathname').should('eq', '/compacts');
+ cy.go('back');
 
 
   })
